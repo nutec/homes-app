@@ -1,47 +1,60 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HousingLocationComponent } from '../housing-location/housing-location.component';
-import { HousingLocation } from '../housing-location';
 import { HousingService } from '../housing.service';
+import { HousingLocation } from '../housing-location';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, map, startWith, switchMap, Observable } from 'rxjs';
 
+/**
+ * HomeComponent
+ *
+ * This component serves as the main landing page for the housing application.
+ * It displays a list of housing locations and provides a reactive search input
+ * to filter the list by city name.
+ */
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, HousingLocationComponent],
-  template: `
-    <section>
-      <form>
-        <input type="text" placeholder="Filter by city" #filter>
-        <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
-      </form>
-    </section>
-    <section class="results">
-      <app-housing-location *ngFor="let housingLocation of filteredLocationList" [housingLocation]="housingLocation"></app-housing-location>
-    </section>
-  `,
-  styleUrls: ['./home.component.css']
+  imports: [CommonModule, ReactiveFormsModule, HousingLocationComponent],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  housingLocationList: HousingLocation[] = [];
-  housingService: HousingService = inject(HousingService);
-  filteredLocationList: HousingLocation[] = [];
+  // Injects the HousingService to fetch housing location data
+  private housingService = inject(HousingService);
 
-  constructor() {
-    this.housingService.getAllHousingLocations().then((housingLocationList: HousingLocation[]) => {
-      this.housingLocationList = housingLocationList;
-      this.filteredLocationList = housingLocationList;
-    });
-  }
+  /**
+   * searchControl
+   *
+   * Reactive form control for the search input.
+   * Tracks the user's search query for filtering housing locations.
+   */
+  searchControl = new FormControl<string>('', { nonNullable: true });
 
-  filterResults(text: string): void {
-  if (!text) {
-    this.filteredLocationList = this.housingLocationList;
-    return;
-  }
-
-  this.filteredLocationList = this.housingLocationList.filter(
-    housingLocation =>
-      housingLocation?.city.toLowerCase().includes(text.toLowerCase())
+  /**
+   * filteredLocationList$
+   *
+   * Observable stream of housing locations filtered by the search input.
+   * - Starts with an empty string to show all locations initially.
+   * - Debounces input to avoid excessive filtering.
+   * - Only emits when the search text changes.
+   * - Fetches all housing locations and filters them by city name (case-insensitive).
+   */
+  filteredLocationList$: Observable<HousingLocation[]> = this.searchControl.valueChanges.pipe(
+    startWith(''),
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap((searchText) =>
+      this.housingService
+        .getAllHousingLocations()
+        .pipe(
+          map((locations) =>
+            locations.filter((location) =>
+              location.city.toLowerCase().includes((searchText ?? '').toLowerCase().trim())
+            )
+          )
+        )
+    )
   );
-}
 }

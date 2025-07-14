@@ -1,0 +1,13 @@
+<section>
+  <form>
+    <input type="text" placeholder="Filter by city" [formControl]="searchControl" />
+  </form>
+
+</section>
+
+<section class="results">
+  <ng-container *ngIf="filteredLocationList$ | async as locations">
+    <app-housing-location *ngFor="let housingLocation of locations"
+      [housingLocation]="housingLocation"></app-housing-location>
+  </ng-container>
+</section>

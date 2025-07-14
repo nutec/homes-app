@@ -1,0 +1,43 @@
+<ng-container *ngIf="housingLocation$ | async as housingLocation">
+  <article>
+    <img class="listing-photo" [src]="housingLocation.photo" alt="Photo of {{ housingLocation.name }}" />
+    <section class="listing-description">
+      <h2 class="listing-heading">{{ housingLocation.name }}</h2>
+      <p class="listing-location">{{ housingLocation.city }}, {{ housingLocation.state }}</p>
+    </section>
+
+    <section class="listing-features">
+      <h2 class="section-heading">About this housing location</h2>
+      <ul>
+        <li>Units available: {{ housingLocation.availableUnits }}</li>
+        <li>Has wifi: {{ housingLocation.wifi }}</li>
+        <li>Has laundry: {{ housingLocation.laundry }}</li>
+      </ul>
+    </section>
+
+    <section class="listing-apply">
+      <h2 class="section-heading">Apply now to live here</h2>
+      <form [formGroup]="applyForm" (submit)="submitApplication($event)">
+        <label for="first-name">First Name</label>
+        <input id="first-name" type="text" formControlName="firstName" />
+        <div *ngIf="f.firstName.invalid && f.firstName.touched" class="error">
+          First name is required.
+        </div>
+
+        <label for="last-name">Last Name</label>
+        <input id="last-name" type="text" formControlName="lastName" />
+        <div *ngIf="f.lastName.invalid && f.lastName.touched" class="error">
+          Last name is required.
+        </div>
+
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" />
+        <div *ngIf="f.email.invalid && f.email.touched" class="error">
+          Enter a valid email.
+        </div>
+
+        <button class="primary" type="submit">Apply now!</button>
+      </form>
+    </section>
+  </article>
+</ng-container>
