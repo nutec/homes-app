@@ -1,0 +1,16 @@
+header {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding: var(--content-padding);
+  box-shadow: 0px 5px 25px var(--shadow-color);
+}
+
+.brand-name-inner {
+  flex: 1;
+  max-width: 1250px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
