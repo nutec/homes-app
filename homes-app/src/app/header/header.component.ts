@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
   template: `
     <header class="brand-name">
       <div class="brand-name-inner">
-        <a [routerLink]="['/']"><img class="brand-logo" src="assets/logo.svg" alt="logo" aria-hidden="true" /></a>
+        <a [routerLink]="['/']" aria-label="Homse logo"><img class="brand-logo" src="assets/logo.svg" alt="logo" aria-hidden="true" /></a>
         <h1>{{title()}}</h1>
       </div>
     </header>
