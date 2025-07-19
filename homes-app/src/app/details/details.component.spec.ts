@@ -1,15 +1,48 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 
 import { DetailsComponent } from './details.component';
+import { HousingService } from '../housing.service';
+import { ActivatedRoute } from '@angular/router';
+import { HousingLocation } from '../housing-location';
 
 describe('DetailsComponent', () => {
   let component: DetailsComponent;
   let fixture: ComponentFixture<DetailsComponent>;
+  let housingServiceSpy: jasmine.SpyObj<HousingService>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [DetailsComponent]
-    });
+  const mockLocation: HousingLocation = {
+    id: 1,
+    name: 'Test Housing',
+    city: 'Test City',
+    state: 'Test State',
+    photo: '',
+    availableUnits: 3,
+    wifi: true,
+    laundry: false,
+  };
+
+  beforeEach(async () => {
+    housingServiceSpy = jasmine.createSpyObj('HousingService', ['getHousingLocationById', 'submitApplication']);
+    housingServiceSpy.getHousingLocationById.and.returnValue(of(mockLocation));
+
+    await TestBed.configureTestingModule({
+      imports: [DetailsComponent, RouterTestingModule, HttpClientTestingModule],
+      providers: [
+        { provide: HousingService, useValue: housingServiceSpy },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            paramMap: of({
+              get: (key: string) => (key === 'id' ? '1' : null),
+            }),
+          },
+        },
+      ],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(DetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -17,5 +50,35 @@ describe('DetailsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should submit application when form is valid', () => {
+    component.applyForm.setValue({
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john@example.com',
+    });
+
+    const event = new Event('submit');
+    component.submitApplication(event);
+
+    expect(housingServiceSpy.submitApplication).toHaveBeenCalledOnceWith(
+      'John',
+      'Doe',
+      'john@example.com'
+    );
+  });
+
+  it('should not submit application when form is invalid', () => {
+    component.applyForm.setValue({
+      firstName: '',
+      lastName: '',
+      email: '', // required + invalid
+    });
+
+    const event = new Event('submit');
+    component.submitApplication(event);
+
+    expect(housingServiceSpy.submitApplication).not.toHaveBeenCalled();
   });
 });
