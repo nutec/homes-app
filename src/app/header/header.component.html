@@ -1,7 +1,15 @@
-<header class="brand-name">
-    <div class="brand-name-inner">
-        <a [routerLink]="['/']" aria-label="Homse logo"><img class="brand-logo" src="assets/logo.svg" alt="logo"
-                aria-hidden="true" /></a>
-        <h1>{{title()}}</h1>
+<header class="header">
+  <div class="header-inner">
+    <div class="brand-name">
+      <a [routerLink]="['/']" aria-label="House logo"
+        ><img
+          class="brand-logo"
+          src="assets/logo.svg"
+          alt="logo"
+          aria-hidden="true"
+      /></a>
+      <h1>{{ liveTitle$ | async }}</h1>    
     </div>
+    <app-click-counter></app-click-counter>
+  </div>
 </header>
