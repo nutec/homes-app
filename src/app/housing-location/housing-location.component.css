@@ -20,16 +20,24 @@
 
 .listing-location {
   padding: 10px 20px 20px 20px;
+  display: flex;
+  align-items: center;
 }
 
 .listing-location::before {
   content: url("/assets/location-pin.svg") / "";
+  display: flex;
+  align-items: center;
+  margin-left: -5px;
 }
 
 section.listing a {
-  padding-left: 20px;
   text-decoration: none;
   color: #403BA6;
+}
+
+.listing-link {
+  padding-left: 20px;
 }
 
 section.listing a::after {

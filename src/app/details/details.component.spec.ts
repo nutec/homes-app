@@ -81,4 +81,25 @@ describe('DetailsComponent', () => {
 
     expect(housingServiceSpy.submitApplication).not.toHaveBeenCalled();
   });
+
+  it('should handle undefined values gracefully in submitApplication', () => {
+  // Clear validators to isolate the test to branch coverage
+  for (const control of Object.values(component.applyForm.controls)) {
+    control.clearValidators();
+    control.updateValueAndValidity();
+  }
+
+  // Use patchValue instead of setValue to allow undefined
+  component.applyForm.patchValue({
+    firstName: undefined,
+    lastName: undefined,
+    email: undefined,
+  });
+
+  const event = new Event('submit');
+  component.submitApplication(event);
+
+  expect(housingServiceSpy.submitApplication).toHaveBeenCalledOnceWith('', '', '');
+});
+
 });
