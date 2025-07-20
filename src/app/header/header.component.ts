@@ -6,14 +6,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  template: `
-    <header class="brand-name">
-      <div class="brand-name-inner">
-        <a [routerLink]="['/']" aria-label="Homse logo"><img class="brand-logo" src="assets/logo.svg" alt="logo" aria-hidden="true" /></a>
-        <h1>{{title()}}</h1>
-      </div>
-    </header>
-  `,
+  templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
