@@ -1,5 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ClickCounterComponent } from './click-counter.component';
 
 describe('ClickCounterComponent', () => {
@@ -19,14 +18,14 @@ describe('ClickCounterComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should start with 0 clicks', fakeAsync(() => {
+  it('should start with 0 clicks', () => {
     component.clickCount$.subscribe((count) => {
       expect(count).toBe(0);
     });
-  }));
+  });
 
-  it('should count clicks', fakeAsync(() => {
-    let result: number[] = [];
+  it('should count clicks', () => {
+    const result: number[] = [];
 
     const sub = component.clickCount$.subscribe((count) => result.push(count));
 
@@ -36,9 +35,9 @@ describe('ClickCounterComponent', () => {
     expect(result).toEqual([0, 1, 2]); // including startWith(0)
 
     sub.unsubscribe();
-  }));
+  });
 
-  it('should update DOM when button is clicked', fakeAsync(() => {
+  it('should update DOM when button is clicked', () => {
     const compiled = fixture.nativeElement as HTMLElement;
 
     const button = compiled.querySelector('button')!;
@@ -50,5 +49,5 @@ describe('ClickCounterComponent', () => {
     fixture.detectChanges();
 
     expect(display.textContent).toContain('1');
-  }));
+  });
 });

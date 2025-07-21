@@ -1,0 +1,49 @@
+input[type='text'] {
+  border: solid 1px var(--primary-color);
+  padding: 10px;
+  border-radius: 8px;
+  margin-right: 4px;
+  display: block;
+  width: 30%;
+}
+
+@media (min-width: 500px) and (max-width: 768px) {
+  input[type='text'] {
+    width: 70%;
+  }
+}
+
+.searchForm {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.suggestions {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #ffffff !important;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  font-size: 14px;
+}
+
+.suggestions li {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.suggestions li:hover {
+  background: #f0f0f0;
+}
+
+.suggestions li.active {
+  background-color: var(--primary-color, #007bff);
+  color: white;
+}

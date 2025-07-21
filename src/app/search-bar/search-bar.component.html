@@ -1,0 +1,24 @@
+<form class="searchForm">
+  <input
+    type="text"
+    placeholder="Filter by city"
+    [formControl]="searchControl"
+    (focus)="isSearchFocused = true"
+    (blur)="onBlur()"
+    autocomplete="off"
+    aria-label="Search for housing by city"
+    (keydown)="onKeyDown($event)"
+  />
+
+  <ul class="suggestions" *ngIf="suggestedCities$ | async as cities">
+    <ng-container *ngIf="cities.length > 0 && isSearchFocused && searchValue.length > 0">
+      <li
+        *ngFor="let city of cities; let i = index"
+        [class.active]="i === activeIndex"
+        (click)="selectCity(city)"
+      >
+        {{ city }}
+      </li>
+    </ng-container>
+  </ul>
+</form>

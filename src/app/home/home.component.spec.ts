@@ -12,9 +12,36 @@ describe('HomeComponent', () => {
   let housingServiceSpy: jasmine.SpyObj<HousingService>;
 
   const mockData: HousingLocation[] = [
-    { id: 1, name: 'Location 1', city: 'New York', state: '', photo: '', availableUnits: 1, wifi: true, laundry: true },
-    { id: 2, name: 'Location 2', city: 'San Francisco', state: '', photo: '', availableUnits: 2, wifi: false, laundry: false },
-    { id: 3, name: 'Location 3', city: 'Chicago', state: '', photo: '', availableUnits: 3, wifi: true, laundry: false },
+    {
+      id: 1,
+      name: 'Location 1',
+      city: 'New York',
+      state: '',
+      photo: '',
+      availableUnits: 1,
+      wifi: true,
+      laundry: true,
+    },
+    {
+      id: 2,
+      name: 'Location 2',
+      city: 'San Francisco',
+      state: '',
+      photo: '',
+      availableUnits: 2,
+      wifi: false,
+      laundry: false,
+    },
+    {
+      id: 3,
+      name: 'Location 3',
+      city: 'Chicago',
+      state: '',
+      photo: '',
+      availableUnits: 3,
+      wifi: true,
+      laundry: false,
+    },
   ];
 
   beforeEach(() => {
