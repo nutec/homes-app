@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { HousingService } from './housing.service';
-import { HousingLocation } from './housing-location';
+import { HousingLocation } from '../types/housing-location';
 
 describe('HousingService', () => {
   let service: HousingService;
@@ -17,7 +17,7 @@ describe('HousingService', () => {
       photo: 'photo.jpg',
       availableUnits: 1,
       wifi: true,
-      laundry: false
+      laundry: false,
     },
     {
       id: 2,
@@ -27,14 +27,14 @@ describe('HousingService', () => {
       photo: 'photo2.jpg',
       availableUnits: 2,
       wifi: false,
-      laundry: true
-    }
+      laundry: true,
+    },
   ];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [HousingService]
+      providers: [HousingService],
     });
     service = TestBed.inject(HousingService);
     httpMock = TestBed.inject(HttpTestingController);

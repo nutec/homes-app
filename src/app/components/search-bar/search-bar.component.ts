@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap, Observable } from 'rxjs';
-import { HousingService } from '../housing.service';
+import { HousingService } from '../../services/housing.service';
 
 @Component({
   selector: 'app-search-bar',

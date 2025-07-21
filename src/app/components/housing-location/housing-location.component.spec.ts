@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { HousingLocationComponent } from './housing-location.component';
-import { HousingLocation } from '../housing-location';
+import { HousingLocation } from '../../types/housing-location';
 
 describe('HousingLocationComponent', () => {
   let component: HousingLocationComponent;
@@ -22,11 +22,7 @@ describe('HousingLocationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        HousingLocationComponent
-      ]
+      imports: [RouterTestingModule, HttpClientTestingModule, HousingLocationComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HousingLocationComponent);

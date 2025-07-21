@@ -17,6 +17,6 @@ export class HeaderComponent {
 
   liveTitle$ = interval(1000).pipe(
     startWith(0),
-    map(count => `Homes App (active for ${count} seconds)`)
+    map((count) => `Homes App (active for ${count} seconds)`)
   );
 }

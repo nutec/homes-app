@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { HomeComponent } from './home.component';
 import { HousingService } from '../housing.service';
-import { HousingLocation } from '../housing-location';
+import { HousingLocation } from '../../types/housing-location';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;

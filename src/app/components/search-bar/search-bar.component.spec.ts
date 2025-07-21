@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 
 import { SearchBarComponent } from './search-bar.component';
 import { HousingService } from '../housing.service';
-import { HousingLocation } from '../housing-location';
+import { HousingLocation } from '../../types/housing-location';
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;

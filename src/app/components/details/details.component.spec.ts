@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { DetailsComponent } from './details.component';
 import { HousingService } from '../housing.service';
 import { ActivatedRoute } from '@angular/router';
-import { HousingLocation } from '../housing-location';
+import { HousingLocation } from '../../types/housing-location';
 
 describe('DetailsComponent', () => {
   let component: DetailsComponent;
@@ -25,7 +25,10 @@ describe('DetailsComponent', () => {
   };
 
   beforeEach(async () => {
-    housingServiceSpy = jasmine.createSpyObj('HousingService', ['getHousingLocationById', 'submitApplication']);
+    housingServiceSpy = jasmine.createSpyObj('HousingService', [
+      'getHousingLocationById',
+      'submitApplication',
+    ]);
     housingServiceSpy.getHousingLocationById.and.returnValue(of(mockLocation));
 
     await TestBed.configureTestingModule({
@@ -83,23 +86,22 @@ describe('DetailsComponent', () => {
   });
 
   it('should handle undefined values gracefully in submitApplication', () => {
-  // Clear validators to isolate the test to branch coverage
-  for (const control of Object.values(component.applyForm.controls)) {
-    control.clearValidators();
-    control.updateValueAndValidity();
-  }
+    // Clear validators to isolate the test to branch coverage
+    for (const control of Object.values(component.applyForm.controls)) {
+      control.clearValidators();
+      control.updateValueAndValidity();
+    }
 
-  // Use patchValue instead of setValue to allow undefined
-  component.applyForm.patchValue({
-    firstName: undefined,
-    lastName: undefined,
-    email: undefined,
+    // Use patchValue instead of setValue to allow undefined
+    component.applyForm.patchValue({
+      firstName: undefined,
+      lastName: undefined,
+      email: undefined,
+    });
+
+    const event = new Event('submit');
+    component.submitApplication(event);
+
+    expect(housingServiceSpy.submitApplication).toHaveBeenCalledOnceWith('', '', '');
   });
-
-  const event = new Event('submit');
-  component.submitApplication(event);
-
-  expect(housingServiceSpy.submitApplication).toHaveBeenCalledOnceWith('', '', '');
-});
-
 });
