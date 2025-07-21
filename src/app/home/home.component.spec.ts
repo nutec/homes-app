@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of, Subscription } from 'rxjs';
+import { of, BehaviorSubject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 import { HomeComponent } from './home.component';
 import { HousingService } from '../housing.service';
@@ -48,44 +49,75 @@ describe('HomeComponent', () => {
     housingServiceSpy = jasmine.createSpyObj('HousingService', ['getAllHousingLocations']);
     housingServiceSpy.getAllHousingLocations.and.returnValue(of(mockData));
 
+    // Mock ActivatedRoute
+    const queryParamsSubject = new BehaviorSubject({});
+    const activatedRouteMock = {
+      queryParams: queryParamsSubject.asObservable(),
+      snapshot: {
+        queryParams: {},
+        paramMap: {
+          get: () => null,
+        },
+      },
+    };
+
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, HomeComponent],
-      providers: [{ provide: HousingService, useValue: housingServiceSpy }],
-    });
+      providers: [
+        { provide: HousingService, useValue: housingServiceSpy },
+        { provide: ActivatedRoute, useValue: activatedRouteMock },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  function runFilteredTest(searchValue: string | null, expectedCount: number) {
-    return fakeAsync(() => {
-      const sub: Subscription = component.filteredLocationList$.subscribe((filtered) => {
-        expect(filtered.length).toBe(expectedCount);
-        sub.unsubscribe(); // cleanup
-      });
-
-      component.searchControl.setValue(searchValue as any);
-      tick(301); // simulate debounce
+  it('should filter housing locations by city name', (done) => {
+    component.onSearchChanged('New');
+    component.filteredLocationList$.subscribe((locations) => {
+      expect(locations.length).toBe(1);
+      expect(locations[0].city).toBe('New York');
+      done();
     });
-  }
+  });
 
-  it('should filter housing locations by matching city name', runFilteredTest('New', 1));
-
-  it('should return empty list when no city matches searchText', runFilteredTest('London', 0));
-
-  it('should handle null searchText safely (?? fallback)', runFilteredTest(null, 3));
-
-  it('should return all housing locations on initial load (startWith empty)', fakeAsync(() => {
-    let sub = component.filteredLocationList$.subscribe((filtered) => {
-      expect(filtered.length).toBe(3);
-      sub.unsubscribe();
+  it('should return no results if no city matches the query', (done) => {
+    component.onSearchChanged('NonExistingCity');
+    component.filteredLocationList$.subscribe((locations) => {
+      expect(locations.length).toBe(0);
+      done();
     });
+  });
 
-    tick(301);
-  }));
+  it('should return all locations if the search query is empty', (done) => {
+    component.onSearchChanged('');
+    component.filteredLocationList$.subscribe((locations) => {
+      expect(locations.length).toBe(3);
+      done();
+    });
+  });
+
+  it('should update filtered results when calling onCitySelected', (done) => {
+    component.onCitySelected('Chicago');
+    component.filteredLocationList$.subscribe((locations) => {
+      expect(locations.length).toBe(1);
+      expect(locations[0].city).toBe('Chicago');
+      done();
+    });
+  });
+
+  it('should handle case-insensitive search queries', (done) => {
+    component.onSearchChanged('new york');
+    component.filteredLocationList$.subscribe((locations) => {
+      expect(locations.length).toBe(1);
+      expect(locations[0].city).toBe('New York');
+      done();
+    });
+  });
 });

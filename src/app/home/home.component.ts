@@ -1,47 +1,57 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HousingLocationComponent } from '../housing-location/housing-location.component';
+import { ReactiveFormsModule, FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { HousingService } from '../housing.service';
 import { HousingLocation } from '../housing-location';
-import { SearchBarComponent } from '../search-bar/search-bar.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { map, Observable } from 'rxjs';
+import { combineLatest, map, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HousingLocationComponent, SearchBarComponent],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  imports: [CommonModule, ReactiveFormsModule],
+  template: `
+    <input [formControl]="searchControl" placeholder="Search by city" />
+    <ul>
+      <li *ngFor="let location of filteredLocationList$ | async">
+        {{ location.name }} – {{ location.city }}
+      </li>
+    </ul>
+  `,
 })
 export class HomeComponent {
   private housingService = inject(HousingService);
-  private currentSearch = '';
+  private route = inject(ActivatedRoute);
 
-  filteredLocationList$: Observable<HousingLocation[]> = this.housingService
-    .getAllHousingLocations()
-    .pipe(
-      map((locations) =>
-        locations.filter((location) =>
-          location.city.toLowerCase().includes(this.currentSearch.toLowerCase().trim())
-        )
-      )
-    );
+  housingLocationList$ = this.housingService.getAllHousingLocations();
+  searchControl = new FormControl('');
 
-  onSearchChanged(query: string) {
-    this.currentSearch = query;
-    this.filteredLocationList$ = this.housingService
-      .getAllHousingLocations()
-      .pipe(
-        map((locations) =>
-          locations.filter((location) =>
-            location.city.toLowerCase().includes(query.toLowerCase().trim())
-          )
-        )
+  filteredLocationList$ = combineLatest([
+    this.housingLocationList$,
+    this.searchControl.valueChanges.pipe(startWith('')),
+  ]).pipe(
+    map(([locations, searchText]) => {
+      const normalizedSearch = this.normalize(searchText);
+      if (!normalizedSearch) return locations;
+
+      return locations.filter((location) =>
+        this.normalize(location.city).includes(normalizedSearch)
       );
+    })
+  );
+
+  onSearchChanged(text: string): void {
+    this.searchControl.setValue(text);
   }
 
-  onCitySelected(city: string) {
-    this.onSearchChanged(city);
+  onCitySelected(city: string): void {
+    this.searchControl.setValue(city);
+  }
+
+  private normalize(value: string | null | undefined): string {
+    return (value ?? '')
+      .trim()
+      .replace(/\s+/g, ' ') // collapse multiple spaces
+      .toLowerCase();
   }
 }
