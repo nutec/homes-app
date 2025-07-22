@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 
 import { SearchBarComponent } from './search-bar.component';
-import { HousingService } from '../housing.service';
+import { HousingService } from '../../services/housing.service';
 import { HousingLocation } from '../../types/housing-location';
 
 describe('SearchBarComponent', () => {

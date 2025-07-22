@@ -4,7 +4,7 @@ import { of, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 import { HomeComponent } from './home.component';
-import { HousingService } from '../housing.service';
+import { HousingService } from '../../services/housing.service';
 import { HousingLocation } from '../../types/housing-location';
 
 describe('HomeComponent', () => {

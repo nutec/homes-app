@@ -4,7 +4,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
 import { DetailsComponent } from './details.component';
-import { HousingService } from '../housing.service';
+import { HousingService } from '../../services/housing.service';
 import { ActivatedRoute } from '@angular/router';
 import { HousingLocation } from '../../types/housing-location';
 
