@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": false,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "lib": ["dom", "es2022"],
+    "moduleResolution": "bundler",
+    "module": "esnext",
+    "target": "es2022",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "jsx": "react", // Correct JSX setting for Stencil
+    "jsxFactory": "h", // Stencil JSX factory
+    "jsxFragmentFactory": "Fragment", // Stencil fragment factory
+    "types": ["jest"],
+    "skipLibCheck": true,
+    "strict": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

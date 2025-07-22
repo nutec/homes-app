@@ -16,9 +16,12 @@
         *ngFor="let city of cities; let i = index"
         [class.active]="i === activeIndex"
         (click)="selectCity(city)"
+        (keydown.enter)="selectCity(city)"
+        tabindex="0"
       >
         {{ city }}
       </li>
     </ng-container>
   </ul>
 </form>
+<my-component first="John" middle="P." last="Doe"></my-component>

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 
 @Component({
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   selector: 'app-root',
   template: `<main>
     <app-header></app-header>
