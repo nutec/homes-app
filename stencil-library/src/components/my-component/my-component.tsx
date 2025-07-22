@@ -27,6 +27,10 @@ export class MyComponent {
   }
 
   render() {
+    const text = this.getText();
+    if (!text) {
+      return <div class="my-component">Hello, World!</div>;
+    }
     return <div class="my-component">Hello, World! I'm {this.getText()}</div>;
   }
 }

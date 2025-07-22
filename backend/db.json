@@ -1,6 +1,18 @@
 {
+  "users": [
+    {
+      "id": 1,
+      "username": "Zsolt",
+      "password": "password123"
+    },
+    {
+      "id": 2,
+      "username": "admin",
+      "password": "adminpassword"
+    }
+  ],
   "locations": [
-    { 
+    {
       "id": 0,
       "name": "Acme Fresh Start Housing",
       "city": "Chicago",
