@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { HousingLocationComponent } from './housing-location.component';
 import { HousingLocation } from '../../types/housing-location';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('HousingLocationComponent', () => {
   let component: HousingLocationComponent;
@@ -22,8 +23,9 @@ describe('HousingLocationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule, HousingLocationComponent],
-    }).compileComponents();
+    imports: [RouterTestingModule, HousingLocationComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
 
     fixture = TestBed.createComponent(HousingLocationComponent);
     component = fixture.componentInstance;

@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { of, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 import { HomeComponent } from './home.component';
 import { HousingService } from '../../services/housing.service';
 import { HousingLocation } from '../../types/housing-location';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -62,12 +63,14 @@ describe('HomeComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, HomeComponent],
-      providers: [
+    imports: [HomeComponent],
+    providers: [
         { provide: HousingService, useValue: housingServiceSpy },
         { provide: ActivatedRoute, useValue: activatedRouteMock },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;

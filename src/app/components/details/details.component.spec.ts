@@ -1,12 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
 import { DetailsComponent } from './details.component';
 import { HousingService } from '../../services/housing.service';
 import { ActivatedRoute } from '@angular/router';
 import { HousingLocation } from '../../types/housing-location';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('DetailsComponent', () => {
   let component: DetailsComponent;
@@ -32,19 +33,21 @@ describe('DetailsComponent', () => {
     housingServiceSpy.getHousingLocationById.and.returnValue(of(mockLocation));
 
     await TestBed.configureTestingModule({
-      imports: [DetailsComponent, RouterTestingModule, HttpClientTestingModule],
-      providers: [
+    imports: [DetailsComponent, RouterTestingModule],
+    providers: [
         { provide: HousingService, useValue: housingServiceSpy },
         {
-          provide: ActivatedRoute,
-          useValue: {
-            paramMap: of({
-              get: (key: string) => (key === 'id' ? '1' : null),
-            }),
-          },
+            provide: ActivatedRoute,
+            useValue: {
+                paramMap: of({
+                    get: (key: string) => (key === 'id' ? '1' : null),
+                }),
+            },
         },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(DetailsComponent);
     component = fixture.componentInstance;
