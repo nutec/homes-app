@@ -1,3 +1,9 @@
+.searchbar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
 input[type='text'] {
   border: solid 1px var(--primary-color);
   padding: 10px;
@@ -16,6 +22,7 @@ input[type='text'] {
 .searchForm {
   position: relative;
   display: flex;
+  flex: 1;
   flex-direction: column;
   z-index: 1;
 }

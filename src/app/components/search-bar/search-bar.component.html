@@ -1,27 +1,29 @@
-<form class="searchForm">
-  <input
-    type="text"
-    placeholder="Filter by city"
-    [formControl]="searchControl"
-    (focus)="isSearchFocused = true"
-    (blur)="onBlur()"
-    autocomplete="off"
-    aria-label="Search for housing by city"
-    (keydown)="onKeyDown($event)"
-  />
+<div class="searchbar">
+  <form class="searchForm">
+    <input
+      type="text"
+      placeholder="Filter by city"
+      [formControl]="searchControl"
+      (focus)="isSearchFocused = true"
+      (blur)="onBlur()"
+      autocomplete="off"
+      aria-label="Search for housing by city"
+      (keydown)="onKeyDown($event)"
+    />
 
-  <ul class="suggestions" *ngIf="suggestedCities$ | async as cities">
-    <ng-container *ngIf="cities.length > 0 && isSearchFocused && searchValue.length > 0">
-      <li
-        *ngFor="let city of cities; let i = index"
-        [class.active]="i === activeIndex"
-        (click)="selectCity(city)"
-        (keydown.enter)="selectCity(city)"
-        tabindex="0"
-      >
-        {{ city }}
-      </li>
-    </ng-container>
-  </ul>
-</form>
-<my-component first="John" middle="P." last="Doe"></my-component>
+    <ul class="suggestions" *ngIf="suggestedCities$ | async as cities">
+      <ng-container *ngIf="cities.length > 0 && isSearchFocused && searchValue.length > 0">
+        <li
+          *ngFor="let city of cities; let i = index"
+          [class.active]="i === activeIndex"
+          (click)="selectCity(city)"
+          (keydown.enter)="selectCity(city)"
+          tabindex="0"
+        >
+          {{ city }}
+        </li>
+      </ng-container>
+    </ul>
+  </form>
+  <my-component first="John" middle="P." last="Doe"></my-component>
+</div>

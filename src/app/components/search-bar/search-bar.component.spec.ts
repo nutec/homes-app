@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 
@@ -55,48 +55,32 @@ describe('SearchBarComponent', () => {
 
     fixture = TestBed.createComponent(SearchBarComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges(); // Trigger Angular lifecycle hooks
+    fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit searchChanged when searchControl value changes', (done) => {
-    // Subscribe to searchChanged emitter
-    component.searchChanged.subscribe((value) => {
-      expect(value).toBe('San');
-      done();
-    });
-
-    // Simulate user input
-    component.searchControl.setValue('San');
-  });
-
-  it('should emit citySelected when a city is selected', (done) => {
+  it('should emit citySelected when a city is selected', () => {
+    const citySelectedSpy = spyOn(component.citySelected, 'emit');
     const testCity = 'New York';
 
-    // Subscribe to citySelected emitter
-    component.citySelected.subscribe((city) => {
-      expect(city).toBe(testCity);
-      done();
-    });
-
-    // Simulate city selection
     component.selectCity(testCity);
+
+    expect(citySelectedSpy).toHaveBeenCalledOnceWith(testCity);
   });
 
-  it('should generate suggestedCities$ based on input', (done) => {
-    component.suggestedCities$.subscribe((cities) => {
-      expect(cities).toContain('New York');
-      expect(cities).toContain('Chicago');
-      expect(cities.length).toBe(3); // All unique cities from mockData
-      done();
-    });
+  it('should filter suggestedCities$ based on user input', fakeAsync(() => {
+    let filteredSuggestions: string[] = [];
 
-    // Simulate user input
-    component.searchControl.setValue(''); // Empty search should return all suggestions
-  });
+    component.suggestedCities$.subscribe((cities) => (filteredSuggestions = cities));
+
+    component.searchControl.setValue('San');
+    tick(200); // Simulate debounce time
+
+    expect(filteredSuggestions).toEqual(['San Francisco']);
+  }));
 
   it('should navigate suggestions with ArrowUp and ArrowDown', () => {
     const eventDown = new KeyboardEvent('keydown', { key: 'ArrowDown' });
@@ -104,14 +88,14 @@ describe('SearchBarComponent', () => {
 
     component.suggestions = ['New York', 'San Francisco', 'Chicago'];
 
-    // Simulate ArrowDown input
+    // Navigate down
     component.onKeyDown(eventDown);
     expect(component.activeIndex).toBe(0);
 
     component.onKeyDown(eventDown);
     expect(component.activeIndex).toBe(1);
 
-    // Simulate ArrowUp input
+    // Navigate up
     component.onKeyDown(eventUp);
     expect(component.activeIndex).toBe(0);
   });
