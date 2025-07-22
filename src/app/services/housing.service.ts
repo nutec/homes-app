@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HousingLocation } from '../types/housing-location';
@@ -7,9 +7,9 @@ import { HousingLocation } from '../types/housing-location';
   providedIn: 'root',
 })
 export class HousingService {
-  private readonly url = 'http://localhost:3000/locations';
+  private http = inject(HttpClient); // Streamlined DI with inject()
 
-  constructor(private http: HttpClient) {}
+  private readonly url = 'http://localhost:3000/locations'; // Base URL for housing locations
 
   getAllHousingLocations(): Observable<HousingLocation[]> {
     return this.http.get<HousingLocation[]>(this.url);
@@ -21,6 +21,6 @@ export class HousingService {
 
   submitApplication(firstName: string, lastName: string, email: string): void {
     console.log(`Application submitted by ${firstName} ${lastName} with email ${email}`);
-    // Here you would typically send the application to a server or save it in some way
+    // Mock: Implement actual server communication logic here
   }
 }
