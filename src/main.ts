@@ -8,5 +8,8 @@ import routeConfig from './app/app.routes';
 defineCustomElements(window);
 
 bootstrapApplication(AppComponent, {
-  providers: [provideRouter(routeConfig), provideHttpClient()],
+  providers: [
+    provideRouter(routeConfig), // Provide routes here
+    provideHttpClient(), // For HTTP communication
+  ],
 }).catch((err) => console.error(err));

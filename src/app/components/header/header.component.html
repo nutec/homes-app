@@ -2,14 +2,14 @@
   <div class="header-inner">
     <div class="brand-name">
       <a [routerLink]="['/']" aria-label="House logo"
-        ><img
-          class="brand-logo"
-          src="assets/logo.svg"
-          alt="logo"
-          aria-hidden="true"
+        ><img class="brand-logo" src="assets/logo.svg" alt="logo" aria-hidden="true"
       /></a>
-      <h1>{{ liveTitle$ | async }}</h1>    
+      <h1>{{ liveTitle$ | async }}</h1>
     </div>
     <app-click-counter></app-click-counter>
+    <button class="primary" *ngIf="!isLoggedIn()" (click)="router.navigate(['/login'])">
+      Login
+    </button>
+    <button class="primary" *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
   </div>
 </header>

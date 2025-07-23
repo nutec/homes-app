@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap, Observable } from 'rxjs';
 import { HousingService } from '../../services/housing.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -38,9 +39,14 @@ export class SearchBarComponent {
   );
 
   housingService = inject(HousingService);
+  authService = inject(AuthService);
 
   get searchValue(): string {
     return this.searchControl.value ?? '';
+  }
+
+  get username(): string | null {
+    return this.authService.getLoggedInUsername();
   }
 
   onBlur() {
