@@ -8,20 +8,15 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface MyComponent {
         /**
+          * The user role
+          * @default 'user'
+         */
+        "authRole"?: string;
+        /**
           * The first name
           * @default 'John'
          */
         "first": string;
-        /**
-          * The last name
-          * @default 'Doe'
-         */
-        "last": string;
-        /**
-          * The middle name
-          * @default ''
-         */
-        "middle": string;
     }
 }
 declare global {
@@ -38,20 +33,15 @@ declare global {
 declare namespace LocalJSX {
     interface MyComponent {
         /**
+          * The user role
+          * @default 'user'
+         */
+        "authRole"?: string;
+        /**
           * The first name
           * @default 'John'
          */
         "first"?: string;
-        /**
-          * The last name
-          * @default 'Doe'
-         */
-        "last"?: string;
-        /**
-          * The middle name
-          * @default ''
-         */
-        "middle"?: string;
     }
     interface IntrinsicElements {
         "my-component": MyComponent;

@@ -23,7 +23,6 @@ export class AuthService {
     localStorage.removeItem('access_token'); // Remove token
   }
 
-  // Decode the token to retrieve username
   getLoggedInUsername(): string | null {
     const token = localStorage.getItem('access_token');
     if (!token) {
@@ -34,5 +33,17 @@ export class AuthService {
     const payloadBase64 = token.split('.')[1];
     const payload = JSON.parse(atob(payloadBase64));
     return payload?.username || null; // Extract username from the token payload
+  }
+
+  getLoggedInRole(): string | null {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      return null;
+    }
+
+    // Decode JWT payload (base64-decoded string between the two dots)
+    const payloadBase64 = token.split('.')[1];
+    const payload = JSON.parse(atob(payloadBase64));
+    return payload?.role || null; // Extract role from the token payload
   }
 }

@@ -49,6 +49,10 @@ export class SearchBarComponent {
     return this.authService.getLoggedInUsername();
   }
 
+  get authRole(): string | null {
+    return this.authService.getLoggedInRole();
+  }
+
   onBlur() {
     setTimeout(() => (this.isSearchFocused = false), 200);
   }

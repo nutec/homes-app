@@ -3,12 +3,14 @@
     {
       "id": 1,
       "username": "Zsolt",
-      "password": "password123"
+      "password": "password123",
+      "role": "user"
     },
     {
       "id": 2,
       "username": "admin",
-      "password": "adminpassword"
+      "password": "adminpassword",
+      "role": "admin"
     }
   ],
   "locations": [

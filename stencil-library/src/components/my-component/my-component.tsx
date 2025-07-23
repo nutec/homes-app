@@ -1,5 +1,4 @@
 import { Component, Prop, h } from '@stencil/core';
-import { format } from '../../utils/utils';
 
 @Component({
   tag: 'my-component',
@@ -13,24 +12,30 @@ export class MyComponent {
   @Prop() first: string = 'John';
 
   /**
-   * The middle name
+   * The user role
    */
-  @Prop() middle: string = '';
+  @Prop() authRole?: string = 'user'; // Optional role with default value
 
   /**
-   * The last name
+   * Formats the text with conditional handling of role
    */
-  @Prop() last: string = 'Doe';
-
   private getText(): string {
-    return format(this.first, this.middle, this.last);
+    // If `authRole` is null, undefined, or empty, fallback to a default message
+    return this.authRole ? `${this.first} (${this.authRole})` : `${this.first}`; // If no role is provided, just show the name
   }
 
+  /**
+   * Renders the component
+   */
   render() {
     const text = this.getText();
+
+    // Render default text if name is empty (fallback handling if required)
     if (!text) {
       return <div class="my-component">Hello, World!</div>;
     }
-    return <div class="my-component">Hello, World! I'm {this.getText()}</div>;
+
+    // Render the personalized message
+    return <div class="my-component">Hello, World! I'm {text}</div>;
   }
 }
