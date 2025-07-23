@@ -1,1 +1,8 @@
-<p>dashboard works!</p>
+<header class="dashboard-header">
+  <div class="dashboard-welcome">
+    <h1>{{ title }}</h1>
+    <p>Welcome to your dashboard! Only logged-in users can see this page.</p>
+  </div>
+
+  <my-component [first]="username || ''" [authRole]="authRole || ''"></my-component>
+</header>

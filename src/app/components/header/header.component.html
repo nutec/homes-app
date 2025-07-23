@@ -7,9 +7,12 @@
       <h1>{{ liveTitle$ | async }}</h1>
     </div>
     <app-click-counter></app-click-counter>
-    <button class="primary" *ngIf="!isLoggedIn()" (click)="router.navigate(['/login'])">
-      Login
-    </button>
-    <button class="primary" *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
+    <div class="authBox">
+      <a class="nav-elem" *ngIf="isLoggedIn()" href="/dashboard">Dashboard</a>
+      <button class="primary" *ngIf="!isLoggedIn()" (click)="router.navigate(['/login'])">
+        Login
+      </button>
+      <button class="primary" *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
+    </div>
   </div>
 </header>

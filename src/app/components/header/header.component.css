@@ -29,3 +29,18 @@
   }
 }
 
+.authBox {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-elem {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.nav-elem:hover {
+  text-decoration: underline;
+}
