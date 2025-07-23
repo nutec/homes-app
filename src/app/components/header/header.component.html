@@ -8,6 +8,7 @@
     </div>
     <app-click-counter></app-click-counter>
     <div class="authBox">
+      <a class="nav-elem" href="/rxjs-sandbox">RxJS</a>
       <a class="nav-elem" *ngIf="isLoggedIn()" href="/dashboard">Dashboard</a>
       <button class="primary" *ngIf="!isLoggedIn()" (click)="router.navigate(['/login'])">
         Login

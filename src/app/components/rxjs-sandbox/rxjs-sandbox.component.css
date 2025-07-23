@@ -1,0 +1,33 @@
+.header {
+  display: flex;
+  width: 100%;
+  padding: 50px 0 30px;
+  border-bottom: 1px solid #ddd;
+}
+
+.rxjs-sandbox {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  gap: 10px;
+}
+
+.main {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+p {
+  font-size: 16px;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+}

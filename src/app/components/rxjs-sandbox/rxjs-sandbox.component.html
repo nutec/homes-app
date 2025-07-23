@@ -1,0 +1,31 @@
+<header class="header">
+  <h1>RxJS Sandbox</h1>
+</header>
+
+<main class="main">
+  <div class="rxjs-sandbox">
+    <h3>Cold observable</h3>
+    <p>Demonstrating a basic cold observable. Click the button to subscribe to the observable.</p>
+    <div class="buttons">
+      <button class="primary" (click)="subscribeToObservable()">
+        Subscribe to Cold Observable
+      </button>
+    </div>
+  </div>
+
+  <div class="rxjs-sandbox">
+    <h3>Hot observable</h3>
+    <p>
+      Demonstrating a basic hot observable. Click the buttons below to subscribe observers to the
+      hot observable. Only active emissions will be received.
+    </p>
+    <div class="buttons">
+      <button class="primary" (click)="subscribeToHotObservable('Observer 1')">
+        Subscribe Observer 1
+      </button>
+      <button class="primary" (click)="subscribeToHotObservable('Observer 2')">
+        Subscribe Observer 2
+      </button>
+    </div>
+  </div>
+</main>
