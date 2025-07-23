@@ -6,3 +6,30 @@
 
   <my-component [first]="username || ''" [authRole]="authRole || ''"></my-component>
 </header>
+<main class="dashboard-main">
+  <section *ngIf="isLoading" class="loading">Loading SpaceX Launches...</section>
+
+  <section *ngIf="!isLoading && launches.length > 0" class="launches">
+    <h2>Upcoming SpaceX Launches</h2>
+    <ul>
+      <li class="launch" *ngFor="let launch of launches">
+        <h3>{{ launch.mission_name }}</h3>
+        <p>
+          <strong>Date:</strong> {{ launch.launch_date_local | date: 'fullDate' }}<br />
+          <strong>Rocket:</strong> {{ launch.rocket.rocket_name }}<br />
+        </p>
+        <button
+          *ngIf="launch.links.video_link"
+          class="primary"
+          (click)="openVideoLink(launch.links.video_link)"
+        >
+          Watch Live
+        </button>
+      </li>
+    </ul>
+  </section>
+
+  <section *ngIf="!isLoading && errorMessage" class="error">
+    <p>{{ errorMessage }}</p>
+  </section>
+</main>
