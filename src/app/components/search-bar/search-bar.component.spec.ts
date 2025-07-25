@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 
@@ -50,7 +52,11 @@ describe('SearchBarComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, SearchBarComponent],
-      providers: [{ provide: HousingService, useValue: housingServiceSpy }],
+      providers: [
+        { provide: HousingService, useValue: housingServiceSpy },
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SearchBarComponent);

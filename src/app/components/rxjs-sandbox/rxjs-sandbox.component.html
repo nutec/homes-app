@@ -28,4 +28,64 @@
       </button>
     </div>
   </div>
+
+  <div class="rxjs-sandbox">
+    <h2>Subject</h2>
+    <div class="buttons">
+      <button class="primary" (click)="subscribeToSubject('Subject Observer 1')">
+        Subscribe to Subject
+      </button>
+      <button class="primary" (click)="emitToSubject()">Emit to Subject</button>
+    </div>
+
+    <h2>BehaviorSubject</h2>
+    <div class="buttons">
+      <button class="primary" (click)="subscribeToBehaviorSubject('Behavior Observer 1')">
+        Subscribe to BehaviorSubject
+      </button>
+      <button class="primary" (click)="emitToBehaviorSubject()">Emit to BehaviorSubject</button>
+    </div>
+
+    <h2>ReplaySubject</h2>
+    <div class="buttons">
+      <button class="primary" (click)="subscribeToReplaySubject('Replay Observer 1')">
+        Subscribe to ReplaySubject
+      </button>
+      <button class="primary" (click)="emitToReplaySubject()">Emit to ReplaySubject</button>
+    </div>
+
+    <h2>AsyncSubject</h2>
+    <div class="buttons">
+      <button class="primary" (click)="subscribeToAsyncSubject('Async Observer 1')">
+        Subscribe to AsyncSubject
+      </button>
+      <button class="primary" (click)="emitToAsyncSubject()">Emit & Complete AsyncSubject</button>
+    </div>
+  </div>
+
+  <div class="rxjs-sandbox">
+    <h2>Simple streams</h2>
+    <p>
+      Stream1: random generates number<br />
+      Stream2: rorund number<br />
+      Stream3: filtered > 3
+    </p>
+    <div class="buttons">
+      <button class="primary" (click)="runStream()">Run streams</button>
+    </div>
+  </div>
+
+  <div class="rxjs-sandbox">
+    <h2>Mapping Operators</h2>
+    <p>return from(['order 1', 'order 2', 'order 3', 'order 4']);</p>
+    <div class="buttons">
+      <button class="primary" (click)="runMergeMap()">Run mergeMap</button>
+
+      <button class="primary" (click)="runConcatMap()">Run concatMap</button>
+
+      <button class="primary" (click)="runExhaustMap()">Run exhaustMap</button>
+
+      <button class="primary" (click)="runSwitchMap()">Run switchMap</button>
+    </div>
+  </div>
 </main>

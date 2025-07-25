@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
 import { RxjsSandboxComponent } from './rxjs-sandbox.component';
 
 describe('RxjsSandboxComponent', () => {
@@ -8,9 +9,9 @@ describe('RxjsSandboxComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RxjsSandboxComponent]
-    })
-    .compileComponents();
+      imports: [RxjsSandboxComponent],
+      providers: [provideHttpClient(), provideHttpClientTesting()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RxjsSandboxComponent);
     component = fixture.componentInstance;
